@@ -5,11 +5,33 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
+	"os/exec"
 
+	"github.com/codegangsta/cli"
 	"golang.org/x/net/html"
 )
 
+var (
+	version string = "0.0.1"
+)
+
 func main() {
+	app := cli.NewApp()
+	app.Name = "befulnes"
+	app.Usage = "save time naming your project"
+	app.Action = getWord
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name:  "project",
+			Usage: "create a git project",
+		},
+	}
+	app.Run(os.Args)
+
+}
+
+func getWord(c *cli.Context) {
 	resp, err := http.Get("http://www.soybomb.com/tricks/words")
 	if err != nil {
 		fmt.Printf("Error grabbing wordlist: %s\n", err)
@@ -35,6 +57,21 @@ func main() {
 		}
 	}
 	f(doc)
-	fmt.Printf("%s\n", words[rand.Intn(len(words))])
+
+	word := words[rand.Intn(len(words))]
+
+	if c.Bool("verbose") || !c.Bool("project") {
+		fmt.Printf("%s\n", word)
+	}
+
+	if c.Bool("project") {
+		cmd := exec.Command("git", "init", word)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Printf("error initializing git repo: %q\n", err.Error())
+			return
+		}
+	}
+
 	return
 }
