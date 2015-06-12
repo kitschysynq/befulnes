@@ -32,14 +32,27 @@ func (w *WordList) Shuffle() {
 	}
 }
 
+func (w *WordList) AddList(l *WordList) {
+	*w = append((*w), (*l)...)
+}
+
 func (w *WordList) Length() int {
 	return len(*w)
 }
 
-func GetWord(verbose, project bool) {
-	sb := &Soybomb{}
-	words := sb.Load()
+// GetWord is a utility function that handles a default case of
+// filling a local cache from a soybomb source and using words
+// from the cache first
+func GetWord(cache string, verbose, project bool) {
+	words := FromFile(cache)
+	for words.Length() < 5 {
+		sb := &Soybomb{}
+		w := sb.Load()
+		words.AddList(w)
+	}
+
 	word := words.Consume()
+	words.ToFile(cache)
 
 	if verbose || !project {
 		fmt.Printf("%s\n", word)

@@ -13,6 +13,12 @@ const (
 	fileSeparator   byte = 0x1c
 )
 
+func FromFile(filename string) *WordList {
+	w := &WordList{}
+	w.FromFile(filename)
+	return w
+}
+
 func (w *WordList) ToFile(filename string) error {
 	file, err := os.Create(filename)
 	if err != nil {

@@ -3,6 +3,7 @@ package main
 
 import (
 	"os"
+	"path"
 
 	"github.com/codegangsta/cli"
 
@@ -28,5 +29,6 @@ func main() {
 }
 
 func getWord(c *cli.Context) {
-	befulnes.GetWord(c.Bool("verbose"), c.Bool("project"))
+	cacheDir := os.Getenv("HOME")
+	befulnes.GetWord(path.Join(cacheDir, ".befulnes.cache"), c.Bool("verbose"), c.Bool("project"))
 }
