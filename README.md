@@ -1,6 +1,9 @@
 befulnes
 ========
 
+[![GoDoc](http://godoc.org/github.com/kitschysynq/befulnes?status.svg)](http://godoc.org/github.com/kitschysynq/befulnes)
+[![Build Status](https://travis-ci.org/kitschysynq/befulnes.svg?branch=master)](https://travis-ci.org/kitschysynq/befulnes)
+
 Stop wasting time naming things. Names are hard, and generally not nearly as important as people make them out to be. Even when they turn out to be important, they're usually pretty easy to change.
 
 Usage
