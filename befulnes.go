@@ -7,17 +7,24 @@ import (
 	"os/exec"
 )
 
+// WordSource is the interface that wraps the Load method for
+// getting a list of words. It should probably be called Loader.
 type WordSource interface {
 	Load() *WordList
 }
 
+// WordList is a list of words from which a random word can be
+// consumed. There are not many things here that aren't pretty
+// basic list operations.
 type WordList []string
 
+// FromSlice creates a new WordList from the given slice
 func FromSlice(w []string) *WordList {
 	wl := WordList(w)
 	return &wl
 }
 
+// Consume removes a word from the WordList and returns it
 func (w *WordList) Consume() string {
 	index := rand.Intn(len(*w))
 	word := (*w)[index]
@@ -25,6 +32,7 @@ func (w *WordList) Consume() string {
 	return word
 }
 
+// Shuffle randomizes the order of the words in the WordList
 func (w *WordList) Shuffle() {
 	for i := len(*w) - 1; i > 0; i-- {
 		swap := rand.Intn(i)
@@ -32,10 +40,12 @@ func (w *WordList) Shuffle() {
 	}
 }
 
+// AddList extends the WordList with the given words
 func (w *WordList) AddList(l *WordList) {
 	*w = append((*w), (*l)...)
 }
 
+// Length returns the number of words currently ready to be consumed.
 func (w *WordList) Length() int {
 	return len(*w)
 }
