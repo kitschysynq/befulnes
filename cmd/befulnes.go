@@ -19,10 +19,15 @@ func main() {
 	app.Name = "befulnes"
 	app.Usage = "save time naming your project"
 	app.Action = getWord
+	app.Version = "0.0.1"
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:  "project",
 			Usage: "create a git project",
+		},
+		cli.BoolFlag{
+			Name:  "verbose",
+			Usage: "always display selection",
 		},
 	}
 	app.Run(os.Args)
