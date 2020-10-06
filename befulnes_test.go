@@ -33,7 +33,7 @@ func TestShuffle(t *testing.T) {
 	}
 
 	if (float64(match) / total) > 0.2 {
-		t.Errorf("more than 20% of shuffled lists matched the original")
+		t.Errorf("more than 20%% of shuffled lists matched the original")
 	}
 }
 
