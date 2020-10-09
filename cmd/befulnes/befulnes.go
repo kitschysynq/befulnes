@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 
 	"github.com/kitschysynq/befulnes"
 )
@@ -21,11 +21,11 @@ func main() {
 	app.Action = getWord
 	app.Version = "0.0.1"
 	app.Flags = []cli.Flag{
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  "project",
 			Usage: "create a git project",
 		},
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  "verbose",
 			Usage: "always display selection",
 		},
@@ -33,7 +33,8 @@ func main() {
 	app.Run(os.Args)
 }
 
-func getWord(c *cli.Context) {
+func getWord(c *cli.Context) error {
 	cacheDir := os.Getenv("HOME")
 	befulnes.GetWord(path.Join(cacheDir, ".befulnes.cache"), c.Bool("verbose"), c.Bool("project"))
+	return nil
 }
